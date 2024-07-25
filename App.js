@@ -12,20 +12,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
-const parent = React.createElement("div",{id:"parent"},
-    React.createElement("div",{id:"child"},
-
-       [ React.createElement("h1",{},"H1 TAG"),React.createElement("h2",{},"H2 TAG")]
-    ),
-    React.createElement("div",{id:"child2"},
-
-        [ React.createElement("h1",{},"H1 TAG"),React.createElement("h2",{},"H2 TAG")]
-     )
-)
 
 
 
-    // const heading = React.createElement("h1",{id:"heading",xyz:"abc"},"Hello world from React!");
+// Jsx is a hmtl like syntax
+// JSX(transpiled before it reaches the js) -> PARCEL - Babel
+
+// JSX => React.createElement => ReactElement - JS Object => HTMLElement(render)
+    const Jsxheading = (<h1  
+        className='head'>Namaste React Using Jsx
+         </h1>)
+
      const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(parent);/// render method of convert the object to html.
+    root.render(Jsxheading);/// render method of convert the object to html.
 
