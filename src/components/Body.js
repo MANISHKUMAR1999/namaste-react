@@ -35,19 +35,20 @@ const Body = () => {
   return restaurantList.length == 0 ? (
     <Shimmer />
   ) : (
-    <div className="body">
-      <div className="filter">
-        <div className="search mt-5 " style={{ display: "flex" }}>
+    <div className="body container">
+      <div className="filter  mt-4 flex gap-5">
+        <div className="search mr-4">
           <input
             type="text"
-            className="search-input"
+            className="search-input border border-solid border-black rounded-md mr-4"
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
           />
-          <div className="search-btn">
+        
             <button
+            className="px-4 py-2 bg-green-100 text-center rounded-lg"
               onClick={() => {
                 console.log(searchText);
                 // const filteredRestaurant = restaurantList.filter((res) => {
@@ -63,11 +64,11 @@ const Body = () => {
             >
               Search btn
             </button>
-          </div>
+         
         </div>
         <div>
           <button
-            className="filter-btn"
+            className="filter-btn px-4 py-2 bg-green-100 rounded-lg"
             onClick={() => {
               const filterList = restaurantList.filter(
                 (res) => res.info.avgRating < 4
@@ -79,13 +80,13 @@ const Body = () => {
           </button>
         </div>
       </div>
-      <div className="restaurant-container">
+      <div className="restaurant-container flex flex-wrap">
         {/* <RestaurantCard resData={resObj[1]} />
           <RestaurantCard resData={resObj[0]} />
           <RestaurantCard resData={resObj[3]} /> */}
 
         {filteredRestaurant.map((restaurant) => (
-       <Link to={"/restaurants/"+restaurant.info.id} key={restaurant.info.id}><RestaurantCard  resData={restaurant} /></Link>   
+       <Link to={"/restaurants/"+restaurant.info.id} key={restaurant.info.id}  className="text-decoration-none text-black"><RestaurantCard  resData={restaurant} /></Link>   
         ))}
       </div>
     </div>
