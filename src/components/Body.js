@@ -14,8 +14,17 @@ const Body = () => {
   }, []);
 
   async function fetchData() {
+  const proxyUrl = '/.netlify/functions/proxy?url=';
+   // const proxy_url = "http://localhost:8080/"
+    const main_url = "https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.59080&lng=85.13480&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.59080&lng=85.13480&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      
+      proxy_url+main_url,
+      {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      }
     );
     const json = await data.json();
     console.log(json);
