@@ -14,23 +14,52 @@ const Body = () => {
   }, []);
 
   async function fetchData() {
+
+    const proxyUrl = '/.netlify/functions/proxy?url=';
+    const targetUrl = 'https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.59080&lng=85.13480&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING';
+
+
+   // const proxyUrl = '/.netlify/functions/proxy?url=';
+   // const targetUrl = 'https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.59080&lng=85.13480&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING';
+
+    try {
+      const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      console.error('There has been a problem with your fetch operation:', error);
+    }
+
+
+
+
+
+
+
+
+
+
+
   //const proxyUrl = '/.netlify/functions/proxy?url=';
-   const proxy_url = "http://localhost:8080/"
-    const main_url = "https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.59080&lng=85.13480&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    const data = await fetch(
+  //  const proxy_url = "http://localhost:8080/"
+  //   const main_url = "https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.59080&lng=85.13480&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+  //   const data = await fetch(
       
-      main_url
-    );
-    const json = await data.json();
-    console.log(json);
-    setRestaurantList(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setFilteredRestaurant( json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+  //     main_url
+  //   );
+  //   const json = await data.json();
+  //   console.log(json);
+    // setRestaurantList(
+    //   json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    // );
+   // setFilteredRestaurant( json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
   }
-  // if(restaurantList.length == 0){
-  //   return <Shimmer/>
-  // }
+  if(restaurantList.length == 0){
+    return <Shimmer/>
+  }
   // const restaurantList = []
 
   const onlineStatus = useOnlineStatus();
