@@ -1,9 +1,8 @@
-import fetch from 'node-fetch';
-
 export async function handler(event, context) {
   const url = event.queryStringParameters.url;
 
   try {
+    const fetch = (await import('node-fetch')).default;
     const response = await fetch(url);
     const data = await response.json();
 
