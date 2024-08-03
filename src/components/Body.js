@@ -19,12 +19,7 @@ const Body = () => {
     const main_url = "https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.59080&lng=85.13480&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     const data = await fetch(
       
-      main_url,
-      {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        }
-      }
+      main_url
     );
     const json = await data.json();
     console.log(json);
