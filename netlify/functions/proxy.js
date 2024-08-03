@@ -1,18 +1,7 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-exports.handler = async (event) => {
-  const { url } = event.queryStringParameters;
-
-  if (!url) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: 'URL parameter is required' }),
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-    };
-  }
+export async function handler(event, context) {
+  const url = event.queryStringParameters.url;
 
   try {
     const response = await fetch(url);
@@ -21,19 +10,11 @@ exports.handler = async (event) => {
     return {
       statusCode: 200,
       body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
     };
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to fetch data' }),
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
+      body: JSON.stringify({ error: error.message }),
     };
   }
-};
+}

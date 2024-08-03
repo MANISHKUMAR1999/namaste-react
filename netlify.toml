@@ -1,9 +1,7 @@
 [build]
-  publish = "dist"  # Adjust this to match the directory where your build files are output
   functions = "netlify/functions"
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/proxy?url=:splat"
+  to = "/.netlify/functions/:splat"
   status = 200
-  force = true
