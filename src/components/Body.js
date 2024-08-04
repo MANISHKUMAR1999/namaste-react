@@ -1,6 +1,6 @@
 import { resObj } from "./utils/mockdata";
 import React, { useEffect } from "react";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard,{withOfferLabel} from "./RestaurantCard";
 import { useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -9,60 +9,29 @@ const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
   const[filteredRestaurant , setFilteredRestaurant] = useState([])
   const [searchText, setSearchText] = useState("");
+  const RestaurantCardwithOffer = withOfferLabel(RestaurantCard)
   useEffect(() => {
     fetchData();
   }, []);
 
   async function fetchData() {
-
-    const proxyUrl = '/.netlify/functions/proxy?url=';
-    const targetUrl = 'https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.59080&lng=85.13480&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING';
-
-
-   // const proxyUrl = '/.netlify/functions/proxy?url=';
-   // const targetUrl = 'https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.59080&lng=85.13480&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING';
-
-    try {
-      const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
-      if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
-      }
-      const data = await response.json();
-      console.log(data,"from swiggy")
-      setRestaurantList(data);
-    } catch (error) {
-      console.error('There has been a problem with your fetch operation:', error);
-    }
-
-
-
-
-
-
-
-
-
-
-
-  //const proxyUrl = '/.netlify/functions/proxy?url=';
-  //  const proxy_url = "http://localhost:8080/"
-  //   const main_url = "https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.59080&lng=85.13480&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-  //   const data = await fetch(
-      
-  //     main_url
-  //   );
-  //   const json = await data.json();
-  //   console.log(json);
-    // setRestaurantList(
-    //   json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    // );
-   // setFilteredRestaurant( json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.59080&lng=85.13480&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+    );
+    const json = await data.json();
+    console.log(json);
+    setRestaurantList(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    
+    setFilteredRestaurant( json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    console.log(filteredRestaurant,"hello")
   }
-  if(restaurantList.length == 0){
-    return <Shimmer/>
-  }
+  // if(restaurantList.length == 0){
+  //   return <Shimmer/>
+  // }
   // const restaurantList = []
-
+  console.log(filteredRestaurant,"hello")
   const onlineStatus = useOnlineStatus();
 
   if(onlineStatus === false) return (<h1>seems you are offline</h1>)
@@ -114,14 +83,36 @@ const Body = () => {
           </button>
         </div>
       </div>
-      <div className="restaurant-container flex flex-wrap">
+      <div className='flex gap-8 flex-wrap mt-10 2xl:justify-start justify-center'>
         {/* <RestaurantCard resData={resObj[1]} />
           <RestaurantCard resData={resObj[0]} />
           <RestaurantCard resData={resObj[3]} /> */}
-
+  {/* {
+                filteredRestaurant?.map((res) => (
+                  <Link className='relative transition-all hover:scale-95' key={res?.info?.id} to={`/restaurants/${res?.info?.id}`}>
+                    {
+                      res?.info?.aggregatedDiscountInfoV3 ? <RestaurantCardwithOffer info={res?.info} /> : <RestaurantCard info={res?.info} />
+                    }
+                  </Link>
+                ))
+              } */}
+{/* 
         {filteredRestaurant.map((restaurant) => (
-       <Link to={"/restaurants/"+restaurant.info.id} key={restaurant.info.id}  className="text-decoration-none text-black"><RestaurantCard  resData={restaurant} /></Link>   
-        ))}
+       <Link to={"/restaurants/"+restaurant.info.id} key={restaurant.info.id}  className="text-decoration-none text-black">
+        
+        <RestaurantCard  resData={restaurant} /></Link> 
+          
+        ))} */}
+
+        {
+          filteredRestaurant.map((restaurant)=>(
+            <Link to={"/restaurants/"+restaurant.info.id} key={restaurant.info.id}  className='relative transition-all hover:scale-95'>
+              {
+                restaurant?.info?.aggregatedDiscountInfoV3 ? <RestaurantCardwithOffer resData={restaurant}/> : <RestaurantCard resData={restaurant}/>
+              }
+            </Link>
+          ))
+        }
       </div>
     </div>
   );
