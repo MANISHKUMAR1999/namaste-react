@@ -1,2 +1,0 @@
-# /public/_redirects
-/api/* https://www.swiggy.com/dapi/:splat 200
