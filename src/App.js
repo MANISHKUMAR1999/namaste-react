@@ -7,7 +7,7 @@
 
 </div> */
 
-import React,{lazy,Suspense} from "react";
+import React,{lazy,Suspense, useEffect, useState} from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -18,6 +18,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Shimmer from "./components/Shimmer";
+import userContext from "./components/utils/userContext";
 //import Grocery from "./components/Grocery";
 const resObj = [
   {
@@ -724,6 +725,8 @@ const resObj = [
   },
 ];
 
+
+
 const Grocery = lazy(()=>
   import("./components/Grocery")
 )
@@ -731,11 +734,27 @@ const Grocery = lazy(()=>
 const About = lazy(()=>import("./components/About"))
 
 const AppComponent = () => {
+  
+const [useName,setUserName] = useState("");
+
+useEffect(()=>{
+
+  const data = {
+    userName :"Manish"
+  }
+
+  setUserName(data.userName);
+
+},[])
   return (
+    <userContext.Provider value={{loggedInUser:useName,setUserName}}>
+
+   
     <div className="app">
      <Header/>
       <Outlet/>
     </div>
+    </userContext.Provider>
   );
 };
 

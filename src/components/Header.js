@@ -1,13 +1,17 @@
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "./utils/useOnlineStatus";
+import userContext from "./utils/userContext";
 
 const Header = () => {
 //let btnName  = "Login"
 
 const [btnName,setBtnname] = useState("Login")
 const onlineStatus = useOnlineStatus()
+
+const data = useContext(userContext);
+console.log(data,"data from user context");
 
     return (
       <div className="flex justify-between align-content-center shadow-md gray sm:bg-yellow-50 lg:bg-green">
@@ -33,7 +37,8 @@ const onlineStatus = useOnlineStatus()
             <Link to="/contact">Contact Us</Link>
             </li>
             <li>Cart</li>
-            <li> <button onClick={()=>{
+            <li className="font-bold">{data.loggedInUser}</li>
+            <li > <button onClick={()=>{
 
               btnName === "Login" ? setBtnname("Logout") :setBtnname("Login")
 

@@ -1,15 +1,17 @@
 import { resObj } from "./utils/mockdata";
-import React, { useEffect } from "react";
+import React, { useEffect,useContext } from "react";
 import RestaurantCard,{withOfferLabel} from "./RestaurantCard";
 import { useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "./utils/useOnlineStatus";
+import userContext from "./utils/userContext"
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
   const[filteredRestaurant , setFilteredRestaurant] = useState([])
   const [searchText, setSearchText] = useState("");
   const RestaurantCardwithOffer = withOfferLabel(RestaurantCard)
+  const {setUserName,loggedInUser} = useContext(userContext)
   useEffect(() => {
     fetchData();
   }, []);
@@ -81,6 +83,10 @@ const Body = () => {
           >
             Top Rated Button
           </button>
+        </div>
+        <div>
+          <label>UserName : </label>
+         <input type="text" className="border border-black p-2" value={loggedInUser} onChange={(e)=>setUserName(e.target.value)}/>
         </div>
       </div>
       <div className='flex gap-8 flex-wrap mt-10 2xl:justify-start justify-center'>
