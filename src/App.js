@@ -19,6 +19,9 @@ import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Shimmer from "./components/Shimmer";
 import userContext from "./components/utils/userContext";
+import { Provider } from "react-redux";
+import appStore from "./components/utils/appStore";
+import Cart from "./components/Cart";
 //import Grocery from "./components/Grocery";
 const resObj = [
   {
@@ -747,6 +750,9 @@ useEffect(()=>{
 
 },[])
   return (
+    <Provider store={appStore}>
+
+   
     <userContext.Provider value={{loggedInUser:useName,setUserName}}>
 
    
@@ -755,6 +761,7 @@ useEffect(()=>{
       <Outlet/>
     </div>
     </userContext.Provider>
+    </Provider>
   );
 };
 
@@ -784,6 +791,10 @@ const appRouter = createBrowserRouter(
         {
           path:"/restaurants/:resId",
           element:<RestaurantMenu/>
+        },
+        {
+          path:"/cart",
+          element:<Cart/>
         }
       ],
       errorElement:<Error/>

@@ -3,12 +3,17 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "./utils/useOnlineStatus";
 import userContext from "./utils/userContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
 //let btnName  = "Login"
 
 const [btnName,setBtnname] = useState("Login")
-const onlineStatus = useOnlineStatus()
+const onlineStatus = useOnlineStatus();
+
+//Subscribing to the store using selectors
+const cartItems = useSelector((store)=>store.cart.items)
+
 
 const data = useContext(userContext);
 console.log(data,"data from user context");
@@ -36,7 +41,7 @@ console.log(data,"data from user context");
             <li>
             <Link to="/contact">Contact Us</Link>
             </li>
-            <li>Cart</li>
+           <Link to="/cart" className="cursor-pointer text-decoration-none text-black"><li className="font-bold">Cart :- {cartItems.length}</li></Link>   
             <li className="font-bold">{data.loggedInUser}</li>
             <li > <button onClick={()=>{
 
