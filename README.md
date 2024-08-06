@@ -99,3 +99,12 @@ import {Component} from "path";
  - Include @babel/preset-react inside my babel config
  - npm i -D @testing-library/jest-dom
  
+
+ # How UI LOOK LIKE
+ ![alt text](image.png)
+ # when user search 
+ ![alt text](image-1.png)
+ # Top Restaurant
+ ![alt text](image-2.png)
+ # Menu Page
+ ![alt text](image-3.png)
